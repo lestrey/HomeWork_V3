@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+class PriorityQueue {
+public:
+
+    PriorityQueue() {}
+
+    void add(int element, int priority) {
+        elements.push_back(element);
+        priorities.push_back(priority);
+    }
+    int remove() {
+        int maxPriorityIndex = 0;
+        int maxPriority = priorities[0];
+        for (int i = 1; i < priorities.size(); i++) {
+            if (priorities[i] > maxPriority) {
+                maxPriority = priorities[i];
+                maxPriorityIndex = i;
+            }
+        }
+        int result = elements[maxPriorityIndex];
+        elements.erase(elements.begin() + maxPriorityIndex);
+        priorities.erase(priorities.begin() + maxPriorityIndex);
+
+        return result;
+    }
+
+private:
+    std::vector<int> elements;
+    std::vector<int> priorities;
+};
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    PriorityQueue pq;
+    int countElements;
+    std::cout << "Укажите количество элементов\n";
+    std::cin >> countElements;
+    for (int i = 0; i < countElements; i++) {
+        int element;
+        int priority;
+        std::cout << "Введите значение элемента: ";
+        std::cin >> element;
+        std::cout << "Введите приоритет элемента: ";
+        std::cin >> priority;
+        pq.add(element, priority);
+        std::cout << "Элемент добавлен\n";
+    }
+
+    std::cout << "Добавленные элементы:\n";
+    for (int i = 0; i < countElements; i++) {
+        std::cout << pq.remove() << std::endl;
+    }
+
+    return 0;
+}
